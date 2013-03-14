@@ -8,7 +8,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="40" d:DesignWidth="250">
+    d:DesignHeight="40" d:DesignWidth="400">
 
 	<Grid x:Name="LayoutRoot">
 
@@ -22,7 +22,7 @@
 			</Grid.ColumnDefinitions>
 
 			<Grid Height="40" Grid.Column="0" HorizontalAlignment="Right" Tap="ToggleLeft_OnTap">
-				<TextBlock Text="HOME" Foreground="#888888" VerticalAlignment="Center" />
+				<TextBlock Text="" Foreground="#ffffff" VerticalAlignment="Center" Name="ContentLeftTextBlock" />
 			</Grid>
 
 			<Canvas Name="ToggleCanvas" Height="40" Width="80" Grid.Column="2" Tap="Toggle_OnTap">
@@ -73,7 +73,7 @@
 			</Canvas>
 
 			<Grid Height="40" Grid.Column="4" HorizontalAlignment="Left" Tap="ToggleRight_OnTap">
-				<TextBlock Text="AWAY" Foreground="#888888" VerticalAlignment="Center" />
+				<TextBlock Text="" Foreground="#ffffff" VerticalAlignment="Center" Name="ContentRightTextBlock" />
 			</Grid>
 		</Grid>
 
