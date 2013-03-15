@@ -2,19 +2,20 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 {
-	public partial class RoundedToggle : Toggle
+	public partial class RoundedToggleWithInlineOptions : Toggle
 	{
-		public RoundedToggle()
+		public RoundedToggleWithInlineOptions()
 		{
 			InitializeComponent();
 		}
 
-		protected override UIElement ToggleSwitchElement { get { return SwitchEllipse; } }
-		protected override double ToggleLeftMostState { get { return 2.0; } }
-		protected override double ToggleRightMostState { get { return 42.0; } }
+		protected override UIElement ToggleSwitchElement { get { return ToggleSwitch; } }
+		protected override double ToggleLeftMostState { get { return -78.0; } }
+		protected override double ToggleRightMostState { get { return 2.0; } }
 
 
 		[Description("Gets or Sets the content label to the left of the switch")]
@@ -31,19 +32,16 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 			set { ContentRightTextBlock.SetValue(TextBlock.TextProperty, value); }
 		}
 
+		[Description("Gets or Sets the fill brush for the switch")]
+		public Brush Fill
+		{
+			get { return SwitchContainer.Fill; }
+			set { SwitchContainer.Fill = value; }
+		}
+
 		private void Toggle_OnTap(object sender, GestureEventArgs e)
 		{
 			ToggleSwitch();
-		}
-
-		private void ToggleLeft_OnTap(object sender, GestureEventArgs e)
-		{
-			ToggleLeft();
-		}
-
-		private void ToggleRight_OnTap(object sender, GestureEventArgs e)
-		{
-			ToggleRight();
 		}
 	}
 }

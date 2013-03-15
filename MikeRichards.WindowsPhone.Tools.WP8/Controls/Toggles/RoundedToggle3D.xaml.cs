@@ -13,10 +13,10 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 			InitializeComponent();
 		}
 
-		protected override UIElement ToggleSwitchElement
-		{
-			get { return SwitchEllipse; }
-		}
+		protected override UIElement ToggleSwitchElement { get { return SwitchEllipse; } }
+		protected override double ToggleLeftMostState { get { return 1.0; } }
+		protected override double ToggleRightMostState { get { return 43.0; } }
+
 
 		[Description("Gets or Sets the content label to the left of the switch")]
 		public string ContentLeft

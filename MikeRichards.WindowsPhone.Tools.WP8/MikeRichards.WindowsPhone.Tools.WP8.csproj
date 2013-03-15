@@ -89,6 +89,9 @@
     <Compile Include="Controls\Toggles\RoundedToggle3D.xaml.cs">
       <DependentUpon>RoundedToggle3D.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Toggles\RoundedToggleWithInlineOptions.xaml.cs">
+      <DependentUpon>RoundedToggleWithInlineOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Toggles\Toggle.cs" />
     <Compile Include="Controls\Toggles\ToggleDirection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Toggles\RoundedToggle3D.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Toggles\RoundedToggleWithInlineOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

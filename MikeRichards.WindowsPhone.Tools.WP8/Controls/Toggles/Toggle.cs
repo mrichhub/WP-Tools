@@ -23,7 +23,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 				if (!_initialDirection.HasValue)
 				{
 					_initialDirection = value;
-					ToggleSwitchElement.SetValue(Canvas.LeftProperty, value == ToggleDirection.Left ? 1.0 : 43.0);
+					ToggleSwitchElement.SetValue(Canvas.LeftProperty, GetCanvasLeftValueForDirection(value));
 				}
 			}
 		}
@@ -32,6 +32,9 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 		public string Id { get; set; }
 
 		protected abstract UIElement ToggleSwitchElement { get; }
+		protected abstract double ToggleLeftMostState { get; }
+		protected abstract double ToggleRightMostState { get; }
+		protected virtual TimeSpan AnimationTime { get { return TimeSpan.FromMilliseconds(125); } }
 
 		private ToggleDirection? _direction;
 		public ToggleDirection Direction
@@ -66,7 +69,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 				Changing(this, new ToggleChangeEventArgs(Direction));
 			}
 
-			double newCanvasLeftSettingForToggleSwitchElement = Direction == ToggleDirection.Left ? 1.0 : 43.0;
+			double newCanvasLeftSettingForToggleSwitchElement = GetCanvasLeftValueForDirection(Direction);
 
 			Dispatcher.BeginInvoke(() =>
 			{
@@ -75,7 +78,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 				{
 					From = Canvas.GetLeft(ToggleSwitchElement),
 					To = newCanvasLeftSettingForToggleSwitchElement,
-					Duration = TimeSpan.FromMilliseconds(125.0)
+					Duration = AnimationTime
 				};
 
 				Storyboard.SetTarget(animationForSwitchEllipse, ToggleSwitchElement);
@@ -95,6 +98,11 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 				storyboard.Children.Add(animationForSwitchEllipse);
 				storyboard.Begin();
 			});				
+		}
+
+		private double GetCanvasLeftValueForDirection(ToggleDirection direction)
+		{
+			return direction == ToggleDirection.Left ? ToggleLeftMostState : ToggleRightMostState;
 		}
 	}
 
