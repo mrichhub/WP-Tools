@@ -39,6 +39,20 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 			set { SwitchContainer.Fill = value; }
 		}
 
+		[Description("Gets or Sets the foreground brush of all the toggle elements")]
+		public new Brush Foreground
+		{
+			get { return ToggleCircle.Fill; }
+			set { ToggleCircle.Fill = ToggleCircle.Stroke = ContentRightTextBlock.Foreground = ContentLeftTextBlock.Foreground = value; }
+		}
+
+		[Description("Gets or Sets the border brush")]
+		public Brush Border
+		{
+			get { return SwitchContainer.Stroke; }
+			set { SwitchContainer.Stroke = value; }
+		}
+
 		private void Toggle_OnTap(object sender, GestureEventArgs e)
 		{
 			ToggleSwitch();

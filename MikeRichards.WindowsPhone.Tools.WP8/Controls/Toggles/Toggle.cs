@@ -28,9 +28,6 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 			}
 		}
 
-		[Description("A custom identifier for this toggle control. You can set it to whatever you need."), Category("Data")]
-		public string Id { get; set; }
-
 		protected abstract UIElement ToggleSwitchElement { get; }
 		protected abstract double ToggleLeftMostState { get; }
 		protected abstract double ToggleRightMostState { get; }
