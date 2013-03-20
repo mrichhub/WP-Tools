@@ -8,13 +8,38 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 {
 	public partial class TextBoxWithWatermark : TextBox
 	{
-		private bool _isInit;
-
 		[Description("Gets or Sets the watermark value")]
-		public string Watermark { get; set; }
+		public string Watermark
+		{
+			get { return (string) GetValue(WatermarkProperty); }
+			set { SetValue(WatermarkProperty, value); }
+		}
 
+		public static readonly DependencyProperty WatermarkProperty =
+			DependencyProperty.Register("Watermark", typeof(string), typeof(TextBoxWithWatermark), new PropertyMetadata(default(string), OnWatermarkPropertyChanged));
+
+		private static void OnWatermarkPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (!(d is TextBoxWithWatermark)) return;
+
+			var textBoxWithWaterMark = (TextBoxWithWatermark) d;
+			if (textBoxWithWaterMark.Text == string.Empty || string.Equals(textBoxWithWaterMark.Text, (string)e.OldValue, StringComparison.CurrentCultureIgnoreCase))
+			{
+				textBoxWithWaterMark.ShowWatermark();
+			}
+		}
+
+		private Brush _watermarkColor;
 		[Description("Gets or Sets the watermark color brush")]
-		public Brush WatermarkColor { get; set; }
+		public Brush WatermarkColor
+		{
+			get { return _watermarkColor; }
+			set 
+			{ 
+				_watermarkColor = value;
+				ShowWatermarkIfTextBoxEmpty();
+			}
+		}
 
 		private Brush OriginalForeground { get; set; }
 
@@ -22,8 +47,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		{
 			if (string.Equals(Text, Watermark, StringComparison.CurrentCultureIgnoreCase))
 			{
-				Text = "";
-				Foreground = OriginalForeground;
+				HideWatermark();
 			}
 
 			base.OnGotFocus(e);
@@ -31,28 +55,29 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 
 		protected override void OnLostFocus(RoutedEventArgs e)
 		{
-			if (string.Equals(Text, string.Empty, StringComparison.CurrentCultureIgnoreCase))
-			{
-				Foreground = WatermarkColor ?? Foreground;
-				Text = Watermark;
-			}
-
+			ShowWatermarkIfTextBoxEmpty();
 			base.OnLostFocus(e);
 		}
 
-		public override void OnApplyTemplate()
+		private void ShowWatermarkIfTextBoxEmpty()
 		{
-			if (!_isInit)
+			if (string.Equals(Text, string.Empty, StringComparison.CurrentCultureIgnoreCase) || string.Equals(Text, Watermark, StringComparison.CurrentCultureIgnoreCase))
 			{
-				OriginalForeground = Foreground;
-
-				Text = Watermark;
-				Foreground = WatermarkColor ?? Foreground;
-
-				_isInit = true;
+				ShowWatermark();
 			}
+		}
 
-			base.OnApplyTemplate();
+		private void ShowWatermark()
+		{
+			OriginalForeground = OriginalForeground ?? Foreground;
+			Foreground = WatermarkColor ?? Foreground;
+			Text = Watermark ?? string.Empty;
+		}
+
+		private void HideWatermark()
+		{
+			Text = "";
+			Foreground = OriginalForeground ?? Foreground;			
 		}
 	}
 }
