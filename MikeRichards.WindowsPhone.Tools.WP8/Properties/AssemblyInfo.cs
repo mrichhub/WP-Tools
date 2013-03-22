@@ -7,9 +7,9 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MikeRichards.WindowsPhone.Tools.WP8")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Additional Tools for your WP8 arsenal")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Mike Richards")]
 [assembly: AssemblyProduct("MikeRichards.WindowsPhone.Tools.WP8")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
@@ -32,6 +32,6 @@ using System.Resources;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.1.6.1")]
-[assembly: AssemblyFileVersion("0.1.6.1")]
+[assembly: AssemblyVersion("0.1.6.2")]
+[assembly: AssemblyFileVersion("0.1.6.2")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]

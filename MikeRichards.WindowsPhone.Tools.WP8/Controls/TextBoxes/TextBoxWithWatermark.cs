@@ -74,7 +74,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 			Text = Watermark ?? string.Empty;
 		}
 
-		private void HideWatermark()
+		public void HideWatermark()
 		{
 			Text = "";
 			Foreground = OriginalForeground ?? Foreground;			
