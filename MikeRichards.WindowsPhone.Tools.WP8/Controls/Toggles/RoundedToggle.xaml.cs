@@ -33,17 +33,29 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 
 		private void Toggle_OnTap(object sender, GestureEventArgs e)
 		{
-			ToggleSwitch();
+			if (!e.Handled)
+			{
+				ToggleSwitch();
+				e.Handled = true;
+			}
 		}
 
 		private void ToggleLeft_OnTap(object sender, GestureEventArgs e)
 		{
-			ToggleLeft();
+			if (!e.Handled)
+			{
+				ToggleLeft();
+				e.Handled = true;
+			}
 		}
 
 		private void ToggleRight_OnTap(object sender, GestureEventArgs e)
 		{
-			ToggleRight();
+			if (!e.Handled)
+			{
+				ToggleRight();
+				e.Handled = true;
+			}
 		}
 	}
 }

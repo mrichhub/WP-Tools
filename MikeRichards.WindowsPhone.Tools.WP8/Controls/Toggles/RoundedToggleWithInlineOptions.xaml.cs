@@ -55,7 +55,11 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 
 		private void Toggle_OnTap(object sender, GestureEventArgs e)
 		{
-			ToggleSwitch();
+			if (!e.Handled)
+			{
+				ToggleSwitch();
+				e.Handled = true;
+			}
 		}
 	}
 }

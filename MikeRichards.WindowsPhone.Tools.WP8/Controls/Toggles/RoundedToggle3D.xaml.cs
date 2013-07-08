@@ -14,8 +14,8 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 		}
 
 		protected override UIElement ToggleSwitchElement { get { return SwitchEllipse; } }
-		protected override double ToggleLeftMostState { get { return 1.0; } }
-		protected override double ToggleRightMostState { get { return 43.0; } }
+		protected override double ToggleLeftMostState { get { return 2.0; } }
+		protected override double ToggleRightMostState { get { return 42.0; } }
 
 
 		[Description("Gets or Sets the content label to the left of the switch")]
@@ -39,20 +39,39 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.Toggles
 			set { ContentLeftTextBlock.Foreground = ContentRightTextBlock.Foreground = value; }
 		}
 
+		[Description("Gets or Sets the Width of the Toggle")]
+		public double ToggleWidth
+		{
+			get { return (double)ToggleCanvas.GetValue(WidthProperty); }
+			set { ToggleCanvas.SetValue(WidthProperty, value); }
+		}
+
 
 		private void Toggle_OnTap(object sender, GestureEventArgs e)
 		{
-			ToggleSwitch();
+			if (!e.Handled)
+			{
+				ToggleSwitch();
+				e.Handled = true;
+			}
 		}
 
 		private void ToggleLeft_OnTap(object sender, GestureEventArgs e)
 		{
-			ToggleLeft();
+			if (!e.Handled)
+			{
+				ToggleLeft();
+				e.Handled = true;
+			}
 		}
 
 		private void ToggleRight_OnTap(object sender, GestureEventArgs e)
 		{
-			ToggleRight();
+			if (!e.Handled)
+			{
+				ToggleRight();
+				e.Handled = true;
+			}
 		}
 	}
 }
