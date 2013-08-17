@@ -83,6 +83,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\TextBoxes\PasswordBoxWithWatermark.xaml.cs">
+      <DependentUpon>PasswordBoxWithWatermark.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextBoxes\TextBoxWithWatermark.cs" />
     <Compile Include="Controls\Toggles\RoundedToggle.xaml.cs">
       <DependentUpon>RoundedToggle.xaml</DependentUpon>
@@ -98,6 +101,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\TextBoxes\PasswordBoxWithWatermark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Toggles\RoundedToggle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

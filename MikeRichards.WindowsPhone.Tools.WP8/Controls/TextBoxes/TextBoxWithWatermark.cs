@@ -8,10 +8,10 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 {
 	public partial class TextBoxWithWatermark : TextBox
 	{
-		[Description("Gets or Sets the watermark value")]
+		[Description("Gets or Sets the watermark text")]
 		public string Watermark
 		{
-			get { return (string) GetValue(WatermarkProperty); }
+			get { return (string)GetValue(WatermarkProperty); }
 			set { SetValue(WatermarkProperty, value); }
 		}
 
@@ -22,46 +22,82 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		{
 			if (!(d is TextBoxWithWatermark)) return;
 
-			var textBoxWithWaterMark = (TextBoxWithWatermark) d;
-			if (textBoxWithWaterMark.Text == string.Empty || string.Equals(textBoxWithWaterMark.Text, (string)e.OldValue, StringComparison.CurrentCultureIgnoreCase))
+			var textBoxWithWaterMark = (TextBoxWithWatermark)d;
+			if (string.IsNullOrEmpty(textBoxWithWaterMark.Text) || string.Equals(e.OldValue, textBoxWithWaterMark.Text))
 			{
 				textBoxWithWaterMark.ShowWatermark();
 			}
 		}
 
-		private Brush _watermarkColor;
-		[Description("Gets or Sets the watermark color brush")]
+		[Description("Gets or Sets the watermark color")]
 		public Brush WatermarkColor
 		{
-			get { return _watermarkColor; }
-			set 
-			{ 
-				_watermarkColor = value;
+			get { return (Brush)GetValue(WatermarkColorProperty); }
+			set
+			{
+				SetValue(WatermarkColorProperty, value);
 				ShowWatermarkIfTextBoxEmpty();
 			}
 		}
 
+		public static readonly DependencyProperty WatermarkColorProperty =
+			DependencyProperty.Register("WatermarkColor", typeof(Brush), typeof(TextBoxWithWatermark),
+										new PropertyMetadata(default(Brush)));
+
 		private Brush OriginalForeground { get; set; }
+		private Brush OriginalBackground { get; set; }
+
+		public new string Text
+		{
+			get
+			{
+				string textValue = base.Text;
+
+				if (string.Equals(textValue, Watermark, StringComparison.CurrentCulture))
+				{
+					textValue = string.Empty;
+				}
+
+				return textValue;
+			}
+			set { base.Text = value; }
+		}
+
 
 		protected override void OnGotFocus(RoutedEventArgs e)
 		{
-			if (string.Equals(Text, Watermark, StringComparison.CurrentCultureIgnoreCase))
-			{
-				HideWatermark();
-			}
+			HideWatermark();
 
 			base.OnGotFocus(e);
+
+			OriginalBackground = Background;
+			Background = SelectionBackground;
 		}
 
 		protected override void OnLostFocus(RoutedEventArgs e)
 		{
 			ShowWatermarkIfTextBoxEmpty();
+
 			base.OnLostFocus(e);
+
+			Background = OriginalBackground;
+		}
+
+		public override void OnApplyTemplate()
+		{
+			ShowWatermarkIfTextBoxEmpty();
+
+			if (!string.IsNullOrEmpty(Text))
+			{
+				HideWatermark();
+			}
+
+			base.OnApplyTemplate();
 		}
 
 		private void ShowWatermarkIfTextBoxEmpty()
 		{
-			if (string.Equals(Text, string.Empty, StringComparison.CurrentCultureIgnoreCase) || string.Equals(Text, Watermark, StringComparison.CurrentCultureIgnoreCase))
+			if (string.IsNullOrEmpty(Text))
 			{
 				ShowWatermark();
 			}
@@ -74,10 +110,10 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 			Text = Watermark ?? string.Empty;
 		}
 
-		public void HideWatermark()
+		private void HideWatermark()
 		{
-			Text = "";
-			Foreground = OriginalForeground ?? Foreground;			
+			if (string.Equals(base.Text, Watermark, StringComparison.CurrentCultureIgnoreCase)) Text = "";
+			Foreground = OriginalForeground ?? Foreground;
 		}
 	}
 }
