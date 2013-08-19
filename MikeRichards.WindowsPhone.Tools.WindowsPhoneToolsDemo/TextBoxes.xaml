@@ -29,7 +29,8 @@
 
 		<!--ContentPanel - place additional content here-->
 		<StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-			<textboxes:TextBoxWithWatermark Watermark="Watermark" WatermarkColor="#bbbbbb" Background="#ffffff" BorderBrush="#888888" BorderThickness="5" />
+			<textboxes:TextBoxWithWatermark Watermark="TextBox with Watermark" WatermarkColor="#bbbbbb" Background="#ffffff" BorderBrush="#888888" BorderThickness="5" Style="{StaticResource ExampleTextBoxWithWatermarkStyle}" />
+			<textboxes:PasswordBoxWithWatermark Watermark="PasswordBox with Watermark" Style="{StaticResource ExamplePasswordBoxWithWatermarkStyle}" />
 		</StackPanel>
 	</Grid>
 

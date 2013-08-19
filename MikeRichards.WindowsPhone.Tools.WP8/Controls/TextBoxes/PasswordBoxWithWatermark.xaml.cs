@@ -34,16 +34,29 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		[Description("Gets or Sets the watermark text")]
 		public string Watermark
 		{
-			get { return (string)PasswordWatermarkBox.GetValue(TextBoxWithWatermark.WatermarkProperty); }
-			set { PasswordWatermarkBox.SetValue(TextBoxWithWatermark.WatermarkProperty, value); }
+			get { return (string)GetValue(WatermarkProperty); }
+			set { SetValue(WatermarkProperty, value); }
 		}
+
+		public static readonly DependencyProperty WatermarkProperty =
+			DependencyProperty.Register("Watermark", typeof (string), typeof (PasswordBoxWithWatermark),
+				new PropertyMetadata(default(string),
+					(o, args) =>
+						((PasswordBoxWithWatermark) o).WatermarkTextBox.SetValue(TextBoxWithWatermark.WatermarkProperty, args.NewValue)));
+
 
 		[Description("Gets or Sets the watermark color")]
 		public Brush WatermarkColor
 		{
-			get { return (Brush)PasswordWatermarkBox.GetValue(TextBoxWithWatermark.WatermarkColorProperty); }
-			set { PasswordWatermarkBox.SetValue(TextBoxWithWatermark.WatermarkColorProperty, value); }
+			get { return (Brush)GetValue(WatermarkColorProperty); }
+			set { SetValue(WatermarkColorProperty, value); }
 		}
+
+		public static readonly DependencyProperty WatermarkColorProperty =
+			DependencyProperty.Register("WatermarkColor", typeof(Brush), typeof(PasswordBoxWithWatermark),
+				new PropertyMetadata(default(Brush),
+					(o, args) =>
+						((PasswordBoxWithWatermark)o).WatermarkTextBox.SetValue(TextBoxWithWatermark.WatermarkColorProperty, args.NewValue)));
 
 		[Description("Gets or Sets the height")]
 		public new double Height
@@ -62,8 +75,8 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		[Description("Gets or Sets the text wrapping")]
 		public TextWrapping TextWrapping
 		{
-			get { return (TextWrapping)PasswordWatermarkBox.GetValue(TextBox.TextWrappingProperty); }
-			set { PasswordWatermarkBox.SetValue(TextBox.TextWrappingProperty, value); }
+			get { return (TextWrapping)WatermarkTextBox.GetValue(TextBox.TextWrappingProperty); }
+			set { WatermarkTextBox.SetValue(TextBox.TextWrappingProperty, value); }
 		}
 
 		[Description("Gets or Sets the border color")]
@@ -73,6 +86,12 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 			set { SetProperty(BorderBrushProperty, value); }
 		}
 
+		public new static readonly DependencyProperty BorderBrushProperty =
+			DependencyProperty.Register("BorderBrush", typeof(Brush), typeof(PasswordBoxWithWatermark),
+				new PropertyMetadata(default(Brush),
+					(o, args) =>
+						((PasswordBoxWithWatermark)o).SetProperty(Control.BorderBrushProperty, args.NewValue)));
+
 		[Description("Gets or Sets the thickness")]
 		public new Thickness BorderThickness
 		{
@@ -80,12 +99,28 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 			set { SetProperty(BorderThicknessProperty, value); }
 		}
 
+		public new static readonly DependencyProperty BorderThicknessProperty =
+			DependencyProperty.Register("BorderThickness", typeof(Thickness), typeof(PasswordBoxWithWatermark),
+				new PropertyMetadata(default(Thickness),
+					(o, args) =>
+						((PasswordBoxWithWatermark)o).SetProperty(Control.BorderThicknessProperty, args.NewValue)));
+
 		[Description("Gets or Sets the text alignment")]
 		public TextAlignment TextAlignment
 		{
-			get { return (TextAlignment)PasswordWatermarkBox.GetValue(TextBox.TextAlignmentProperty); }
-			set { PasswordWatermarkBox.SetValue(TextBox.TextAlignmentProperty, value); }
+			get { return (TextAlignment)GetValue(TextAlignmentProperty); }
+			set
+			{
+				SetValue(TextAlignmentProperty, value); 
+				WatermarkTextBox.SetValue(TextBox.TextAlignmentProperty, value);
+			}
 		}
+
+		public static readonly DependencyProperty TextAlignmentProperty =
+			DependencyProperty.Register("TextAlignment", typeof(TextAlignment), typeof(PasswordBoxWithWatermark),
+				new PropertyMetadata(TextAlignment.Left,
+					(o, args) =>
+						((PasswordBoxWithWatermark)o).WatermarkTextBox.SetValue(TextBox.TextAlignmentProperty, args.NewValue)));
 
 		[Description("Gets or Sets the font size")]
 		public new double FontSize
@@ -97,9 +132,15 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		[Description("Gets or Set the background")]
 		public new Brush Background
 		{
-			get { return GetProperty<Brush>(BackgroundProperty); }
-			set { SetProperty(BackgroundProperty, value); }
+			get { return GetValue(BackgroundProperty) as Brush; }
+			set { SetValue(BackgroundProperty, value); }
 		}
+
+		public new static readonly DependencyProperty BackgroundProperty =
+			DependencyProperty.Register("Background", typeof(Brush), typeof(PasswordBoxWithWatermark),
+				new PropertyMetadata(default(Brush),
+					(o, args) =>
+						((PasswordBoxWithWatermark)o).SetProperty(Control.BackgroundProperty, args.NewValue)));
 
 		[Description("Gets or Set the background")]
 		public Brush SelectionBackground { get; set; }
@@ -143,7 +184,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 
 		private void ShowPasswordBox(bool doFocus = false)
 		{
-			PasswordWatermarkBox.Visibility = Visibility.Collapsed;
+			WatermarkTextBox.Visibility = Visibility.Collapsed;
 			PasswordBox.Visibility = Visibility.Visible;
 
 			if (doFocus) PasswordBox.Focus();
@@ -152,7 +193,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		private void HidePasswordBox()
 		{
 			PasswordBox.Visibility = Visibility.Collapsed;
-			PasswordWatermarkBox.Visibility = Visibility.Visible;
+			WatermarkTextBox.Visibility = Visibility.Visible;
 		}
 
 		private T GetProperty<T>(DependencyProperty dp)
@@ -164,7 +205,7 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		{
 			if (includeSelf) SetValue(dp, value);
 			PasswordBox.SetValue(dp, value);
-			PasswordWatermarkBox.SetValue(dp, value);
+			WatermarkTextBox.SetValue(dp, value);
 		}
 	}
 }
