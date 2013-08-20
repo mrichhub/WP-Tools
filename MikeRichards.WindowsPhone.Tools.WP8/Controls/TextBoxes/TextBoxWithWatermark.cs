@@ -70,8 +70,8 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 
 			base.OnGotFocus(e);
 
-			OriginalBackground = Background;
-			Background = SelectionBackground;
+			OriginalBackground = OriginalBackground ?? Background;
+			Background = SelectionBackground ?? Background;
 		}
 
 		protected override void OnLostFocus(RoutedEventArgs e)
@@ -80,7 +80,10 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 
 			base.OnLostFocus(e);
 
-			Background = OriginalBackground;
+			if (OriginalBackground != null)
+			{
+				Background = OriginalBackground;				
+			}
 		}
 
 		public override void OnApplyTemplate()

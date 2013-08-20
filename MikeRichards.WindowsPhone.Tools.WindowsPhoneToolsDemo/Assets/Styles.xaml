@@ -13,6 +13,7 @@
 	
 	<Style x:Key="ExampleTextBoxStyle" TargetType="TextBox">
 		<Setter Property="TextAlignment" Value="Center" />
+		<Setter Property="SelectionBackground" Value="#ffffff" />
 	</Style>
 	
 	<Style x:Key="ExampleTextBoxWithWatermarkStyle" TargetType="textBoxes:TextBoxWithWatermark" BasedOn="{StaticResource ExampleTextBoxStyle}">

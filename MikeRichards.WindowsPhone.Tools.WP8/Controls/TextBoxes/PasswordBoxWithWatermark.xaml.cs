@@ -132,15 +132,15 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 		[Description("Gets or Set the background")]
 		public new Brush Background
 		{
-			get { return GetValue(BackgroundProperty) as Brush; }
-			set { SetValue(BackgroundProperty, value); }
+			get { return GetProperty<Brush>(Control.BackgroundProperty); }
+			set { SetProperty(Control.BackgroundProperty, value); }
 		}
 
 		public new static readonly DependencyProperty BackgroundProperty =
 			DependencyProperty.Register("Background", typeof(Brush), typeof(PasswordBoxWithWatermark),
 				new PropertyMetadata(default(Brush),
 					(o, args) =>
-						((PasswordBoxWithWatermark)o).SetProperty(Control.BackgroundProperty, args.NewValue)));
+						((PasswordBoxWithWatermark)o).Background = (Brush)args.NewValue));
 
 		[Description("Gets or Set the background")]
 		public Brush SelectionBackground { get; set; }
@@ -160,16 +160,15 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 
 		private void PasswordWatermarkBox_OnLostFocus(object sender, RoutedEventArgs e)
 		{
-			OriginalBackground = Background;
-			Background = SelectionBackground;
-			PasswordBox.Background = SelectionBackground;
+			//OriginalBackground = Background;
+			//Background = SelectionBackground;
+			//PasswordBox.Background = SelectionBackground;
 		}
 
 		private void PasswordBox_OnGotFocus(object sender, RoutedEventArgs e)
 		{
-			OriginalBackground = Background;
-			Background = SelectionBackground;
-			((PasswordBox)sender).Background = SelectionBackground;
+			OriginalBackground = OriginalBackground ?? Background;
+			Background = SelectionBackground ?? Background;
 		}
 
 		private void PasswordBox_OnLostFocus(object sender, RoutedEventArgs e)
@@ -179,7 +178,10 @@ namespace MikeRichards.WindowsPhone.Tools.WP8.Controls.TextBoxes
 				HidePasswordBox();
 			}
 
-			Background = OriginalBackground;
+			if (OriginalBackground != null)
+			{
+				Background = OriginalBackground;
+			}
 		}
 
 		private void ShowPasswordBox(bool doFocus = false)
